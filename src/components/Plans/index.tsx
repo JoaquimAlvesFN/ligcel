@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -63,6 +63,8 @@ function SamplePrevArrow(props: CustomArrowProps) {
 
 export default function Plans() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [zipcodeLoading, setZipcodeLoading] = React.useState(false);
+
   const settings = {
     dots: true,
     infinite: false,
@@ -161,7 +163,7 @@ export default function Plans() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data: PlansFormProps) => {
+  const onSubmit: SubmitHandler<PlansFormProps> = (data) => {
     const formDataJson = {
       "E-mail:": data.email,
       "CPF/CNPJ:": data.document,
@@ -190,6 +192,7 @@ export default function Plans() {
   }
 
   async function getZipCode(zipcode: number) {
+    setZipcodeLoading(true);
     const data = await (
       await fetch(`https://viacep.com.br/ws/${zipcode}/json/`)
     ).json();
@@ -197,6 +200,7 @@ export default function Plans() {
     setValue("address", data.logradouro);
     setValue("city", data.localidade);
     setValue("state", data.estado);
+    setZipcodeLoading(false);
   }
 
   return (
@@ -241,6 +245,8 @@ export default function Plans() {
         contentLabel="Example Modal"
       >
         {/* <button onClick={closeModal}>X</button> */}
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-expect-error */}
         <PlanStyle.FormPlans onSubmit={handleSubmit(onSubmit)}>
           <PlanStyle.InputFormPlans
             {...register("name")}
@@ -283,6 +289,7 @@ export default function Plans() {
             error={errors.position?.message}
           />
 
+          {zipcodeLoading && "loading..."}
           <PlanStyle.InputFormPlans
             {...register("zipcode")}
             placeholder="CEP*"
