@@ -1,0 +1,21 @@
+{
+  "welcomeMessage": "Olá! Eu sou o ChatBot Assistente da LIGCEL. Como posso ajudar você hoje?",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "Quais serviços você oferece?",
+      "response": "Oferecemos suporte técnico, informações sobre produtos e atendimento ao cliente."
+    },
+    {
+      "id": "q2",
+      "question": "Qual é o horário de funcionamento?",
+      "response": "Estamos disponíveis de segunda a sexta, das 9h às 18h."
+    },
+    {
+      "id": "q3",
+      "question": "Como posso falar com um atendente?",
+      "response": "Você pode solicitar atendimento humano clicando no botão abaixo."
+    }
+  ],
+  "fallbackMessage": "Desculpe, não entendi. Poderia reformular sua pergunta?"
+}
