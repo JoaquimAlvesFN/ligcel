@@ -82,10 +82,15 @@ const PrincipalPrice = styled.span`
 `;
 
 const FormPlans = styled.form`
-  display: flex;
-  /* grid-template-columns: repeat(2, 500px);
-  grid-gap: 10px; */
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-gap: 10px;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const InputFormPlans = styled.input<{ error?: string }>`
@@ -95,7 +100,7 @@ const InputFormPlans = styled.input<{ error?: string }>`
   margin: 10px 0px;
   padding: 10px;
   color: #000;
-  width: 50vw;
+  width: 90%;
   border-radius: 6px;
 `;
 
@@ -111,6 +116,10 @@ const ButtonFormPlans = styled.input`
   color: #000;
   font-weight: 600;
   font-size: 14px;
+
+  @media (max-width: 768px) {
+    width: 70%;
+  }
 `;
 
 const PlanStyle = {

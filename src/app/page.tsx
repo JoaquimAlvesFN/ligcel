@@ -14,6 +14,11 @@ import Message from "@/components/Message";
 
 export default function Home() {
   const { changeOpenChatbot, openChatbot } = useGlobalState();
+  const { innerWidth } = window;
+
+  const widthMsg = innerWidth <= 768 ? 60 : 90;
+  const widthWpp = innerWidth <= 768 ? 60 : 100;
+
   return (
     <>
       <Header />
@@ -29,7 +34,7 @@ export default function Home() {
           style={{
             position: "fixed",
             bottom: 10,
-            right: 10,
+            right: innerWidth <= 768 ? 5 : 10,
             cursor: "pointer",
             display: "flex",
             flexDirection: "column",
@@ -37,14 +42,14 @@ export default function Home() {
         >
           <a onClick={() => changeOpenChatbot(!openChatbot)}>
             <Image
-              width={90}
+              width={widthMsg}
               src={Chatbot}
               alt="Compre agora através do whatsapp"
             />
           </a>
           <a href="https://wa.me/5585986516133" target="_blank">
             <Image
-              width={100}
+              width={widthWpp}
               src={Whatsapp}
               alt="Compre agora através do whatsapp"
             />

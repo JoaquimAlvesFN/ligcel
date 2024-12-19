@@ -65,12 +65,15 @@ export default function Plans() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [zipcodeLoading, setZipcodeLoading] = React.useState(false);
 
+  const { innerWidth } = window;
+
   const settings = {
     dots: true,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    initialSlide: 0,
     centerMode: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -83,6 +86,9 @@ export default function Plans() {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
+      width: innerWidth <= 768 ? "80%" : "50%",
+      height: innerWidth <= 768 ? "80%" : "70%",
+      borderRadius: "10px",
     },
   };
 
@@ -207,7 +213,10 @@ export default function Plans() {
     <>
       <PlanStyle.Container>
         <PlanStyle.Title>Nossos planos</PlanStyle.Title>
-        <div className="slider-container" style={{ width: "50%" }}>
+        <div
+          className="slider-container"
+          style={{ width: innerWidth <= 768 ? "100%" : "50%" }}
+        >
           {/* style={{ width: "30%" }} */}
           <Slider {...settings}>
             {cardPlans.map((card, index) => (
