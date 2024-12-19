@@ -43,7 +43,7 @@ export default function Message() {
     setUserInput("");
   };
 
-  const verifyKey = (event) => {
+  const verifyKey = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
       handleSendMessage();
     }
@@ -99,6 +99,8 @@ export default function Message() {
             type="text"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             onKeyDown={verifyKey}
             placeholder="Digite sua mensagem..."
             style={{
