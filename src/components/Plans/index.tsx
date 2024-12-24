@@ -7,6 +7,7 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useScreenWidth } from "@/hooks/screenWidth";
 
 interface PlansFormProps {
   name: string;
@@ -64,8 +65,7 @@ function SamplePrevArrow(props: CustomArrowProps) {
 export default function Plans() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [zipcodeLoading, setZipcodeLoading] = React.useState(false);
-
-  const { innerWidth } = window;
+  const screenWidth = useScreenWidth();
 
   const settings = {
     dots: true,
@@ -86,8 +86,8 @@ export default function Plans() {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      width: innerWidth <= 768 ? "80%" : "50%",
-      height: innerWidth <= 768 ? "80%" : "70%",
+      width: screenWidth <= 768 ? "80%" : "50%",
+      height: screenWidth <= 768 ? "80%" : "70%",
       borderRadius: "10px",
     },
   };
@@ -215,7 +215,7 @@ export default function Plans() {
         <PlanStyle.Title>Nossos planos</PlanStyle.Title>
         <div
           className="slider-container"
-          style={{ width: innerWidth <= 768 ? "100%" : "50%" }}
+          style={{ width: screenWidth <= 768 ? "100%" : "40%" }}
         >
           {/* style={{ width: "30%" }} */}
           <Slider {...settings}>

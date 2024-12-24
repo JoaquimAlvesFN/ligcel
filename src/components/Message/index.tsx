@@ -3,9 +3,10 @@ import React, { useState } from "react";
 
 import chatbotConfig from "./chatbotConfig.json";
 import useGlobalState from "@/store/global-state";
+import { useScreenWidth } from "@/hooks/screenWidth";
 
 export default function Message() {
-  const { innerWidth } = window;
+  const screenWidth = useScreenWidth();
 
   const { changeOpenChatbot, openChatbot } = useGlobalState();
 
@@ -55,11 +56,11 @@ export default function Message() {
         style={{
           border: "1px solid #ccc",
           padding: "1em",
-          width: innerWidth <= 768 ? "auto" : "400px",
-          height: innerWidth <= 768 ? "400px" : "auto",
+          width: screenWidth <= 768 ? "auto" : "400px",
+          height: screenWidth <= 768 ? "400px" : "auto",
           position: "fixed",
           right: 10,
-          // left: innerWidth <= 768 ?? 10,
+          // left: screenWidth <= 768 ?? 10,
           bottom: 10,
           backgroundColor: "#fff",
           borderRadius: 10,

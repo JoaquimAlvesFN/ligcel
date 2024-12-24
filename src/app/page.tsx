@@ -11,13 +11,14 @@ import Whatsapp from "@/assets/whatsapp.png";
 import Chatbot from "@/assets/chatbot.png";
 import useGlobalState from "@/store/global-state";
 import Message from "@/components/Message";
+import { useScreenWidth } from "@/hooks/screenWidth";
 
 export default function Home() {
   const { changeOpenChatbot, openChatbot } = useGlobalState();
-  const { innerWidth } = window;
+  const screenWidth = useScreenWidth();
 
-  const widthMsg = innerWidth <= 768 ? 60 : 90;
-  const widthWpp = innerWidth <= 768 ? 60 : 100;
+  const widthMsg = screenWidth <= 768 ? 60 : 90;
+  const widthWpp = screenWidth <= 768 ? 60 : 100;
 
   return (
     <>
@@ -34,7 +35,7 @@ export default function Home() {
           style={{
             position: "fixed",
             bottom: 10,
-            right: innerWidth <= 768 ? 5 : 10,
+            right: screenWidth <= 768 ? 5 : 10,
             cursor: "pointer",
             display: "flex",
             flexDirection: "column",
