@@ -1,0 +1,27 @@
+{
+  "sobre": {
+    "titulo": "Sobre a Ligcel",
+    "descricao": "A Ligcel é uma empresa comprometida em oferecer as melhores soluções em entretenimento e tecnologia para você e sua família. Especializada na comercialização de produtos e serviços da Sky, uma das maiores provedoras de TV por assinatura e conteúdo digital do Brasil, a Ligcel atua com excelência para atender às suas necessidades de forma rápida, prática e segura."
+  },
+  "valores": {
+    "titulo": "Nossos Valores",
+    "values": [
+      "Excelência no Atendimento: Oferecemos um serviço personalizado, colocando o cliente sempre em primeiro lugar.",
+      "Inovação: Buscamos soluções modernas e eficazes para tornar sua experiência única.",
+      "Confiabilidade: Trabalhamos com transparência e compromisso, garantindo a segurança e a qualidade em cada etapa do processo."
+    ]
+  },
+  "porque": {
+    "titulo": "Por que escolher a Ligcel?",
+    "descricao": "Com anos de experiência no mercado, a Ligcel se destaca pela eficiência e dedicação em proporcionar a melhor experiência para os nossos clientes. Nossa equipe está sempre pronta para esclarecer dúvidas, oferecer consultoria personalizada e ajudar você a encontrar o plano ideal para sua casa ou empresa."
+  },
+  "conosco": {
+    "titulo": "Conte com a Ligcel",
+    "descricao": "Quer saber mais sobre os nossos serviços ou deseja contratar um plano Sky agora mesmo? Entre em contato com a Ligcel! Estamos à disposição para atender você com agilidade e eficiência.",
+    "contato": {
+      "telefone": "(11) 1234-5678",
+      "email": "ligcel@email.com",
+      "whatsapp": "(11) 98765-4321"
+    }
+  }
+}

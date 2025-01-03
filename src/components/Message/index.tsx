@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-import chatbotConfig from "./chatbotConfig.json";
+import chatbotConfig from "@/data/chatbotConfig.json";
 import useGlobalState from "@/store/global-state";
 import { useScreenWidth } from "@/hooks/screenWidth";
 
@@ -124,10 +124,12 @@ export default function Message() {
         <span
           style={{
             position: "absolute",
-            top: -20,
+            top: -30,
             right: 20,
             cursor: "pointer",
             fontWeight: "bold",
+            backgroundColor: "#FFF",
+            padding: 2,
           }}
           onClick={() => {
             changeOpenChatbot(false);

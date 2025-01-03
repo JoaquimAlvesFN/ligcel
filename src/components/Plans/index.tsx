@@ -1,6 +1,6 @@
 import PlanStyle from "./style-plans";
-import Slider, { CustomArrowProps } from "react-slick";
-import Modal from "react-modal";
+import Slider, { Settings, CustomArrowProps } from "react-slick";
+import ReactModal from "react-modal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import React from "react";
@@ -8,6 +8,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useScreenWidth } from "@/hooks/screenWidth";
+import { useRouter } from "next/navigation";
+import useSelectedPlans from "@/store/selected-plans";
 
 interface PlansFormProps {
   name: string;
@@ -21,9 +23,10 @@ interface PlansFormProps {
   zipcode: number;
   address: string;
   number: number;
+  district: string;
   city: string;
   state: string;
-  reference: string;
+  reference?: string;
 }
 
 function SampleNextArrow(props: CustomArrowProps) {
@@ -66,8 +69,10 @@ export default function Plans() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [zipcodeLoading, setZipcodeLoading] = React.useState(false);
   const screenWidth = useScreenWidth();
+  const { push } = useRouter();
+  const { selectedPlan, changeSelectPlan } = useSelectedPlans();
 
-  const settings = {
+  const settings: Settings = {
     dots: true,
     infinite: false,
     speed: 500,
@@ -77,7 +82,7 @@ export default function Plans() {
     centerMode: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
-  };
+  } as Settings;
   const customStyles = {
     content: {
       top: "50%",
@@ -87,7 +92,7 @@ export default function Plans() {
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
       width: screenWidth <= 768 ? "80%" : "50%",
-      height: screenWidth <= 768 ? "80%" : "70%",
+      height: screenWidth <= 768 ? "90%" : "70%",
       borderRadius: "10px",
     },
   };
@@ -153,6 +158,7 @@ export default function Plans() {
       position: yup.string().required(),
       zipcode: yup.number().min(8).required(),
       address: yup.string().required(),
+      district: yup.string().required(),
       number: yup.number().required(),
       city: yup.string().required(),
       state: yup.string().required(),
@@ -170,27 +176,37 @@ export default function Plans() {
     resolver: yupResolver(schema),
   });
   const onSubmit: SubmitHandler<PlansFormProps> = (data) => {
-    const formDataJson = {
-      "E-mail:": data.email,
-      "CPF/CNPJ:": data.document,
-      "RG:": data.register,
-      "Data de expedição": data.expedition,
-      "Órgão:": data.part,
-      "Cargo do CPF informado:": data.position,
-      "Telefone:": data.cellphone,
-    };
-    console.log(formDataJson);
+    const textFormmated = `VENDA Produto ✅  ${"\n"}\
+      _Formulário de contratação para de acordo do cliente_ \
+      *Endereço de instalação:* ${data.address},${data.number} - ${
+      data.district
+    }, ${data.city}/${data.state}\
+      *CEP:* ${data.zipcode} \
+      *E-mail:* ${data.email}\
+      *CPF/CNPJ:* ${data.document}\
+      *RG:* ${data.register}\
+      *Data de expedição:* ${data.expedition}\
+      *Órgão:* ${data.part}\
+      *Cargo do CPF informado:*  ${data.position}\
+      *Telefone:* ${data.cellphone}\
+      _Resumo do plano contratado_ \
+      *Pacote contratado:* ${selectedPlan.name} \
+      *Valor final acordado:* R$ ${selectedPlan.value}`;
+
+    push(
+      `https://api.whatsapp.com/send?phone=5585986516133&text=${textFormmated}`
+    );
     closeModal();
+    changeSelectPlan({
+      name: "",
+      value: "",
+      options: "",
+    });
     reset();
   };
 
   function openModal() {
     setIsOpen(true);
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // subtitle.style.color = "#f00";
   }
 
   function closeModal() {
@@ -206,6 +222,7 @@ export default function Plans() {
     setValue("address", data.logradouro);
     setValue("city", data.localidade);
     setValue("state", data.estado);
+    setValue("district", data.bairro);
     setZipcodeLoading(false);
   }
 
@@ -217,7 +234,8 @@ export default function Plans() {
           className="slider-container"
           style={{ width: screenWidth <= 768 ? "100%" : "40%" }}
         >
-          {/* style={{ width: "30%" }} */}
+          {/* @typescript-eslint/ban-ts-comment */}
+          {/* @ts-expect-error */}
           <Slider {...settings}>
             {cardPlans.map((card, index) => (
               <PlanStyle.ContainerCard key={index}>
@@ -234,28 +252,51 @@ export default function Plans() {
                     {card.titleThreeMonths}
                     {card.afterThreeMonthsPrice}
                   </PlanStyle.SubHeadTitle>
-                  <PlanStyle.ButtonPlan onClick={openModal}>
+                  <PlanStyle.ButtonPlan
+                    onClick={() => {
+                      openModal();
+                      changeSelectPlan({
+                        name: card.title,
+                        value: card.price,
+                        options: "",
+                      });
+                    }}
+                  >
                     Contratar Plano
                   </PlanStyle.ButtonPlan>
-                  <PlanStyle.DetailsLink>
+                  {/* <PlanStyle.DetailsLink>
                     {"Mais detalhes >"}
-                  </PlanStyle.DetailsLink>
+                  </PlanStyle.DetailsLink> */}
                 </PlanStyle.ContentCard>
               </PlanStyle.ContainerCard>
             ))}
           </Slider>
         </div>
       </PlanStyle.Container>
-      <Modal
+      {/* @typescript-eslint/ban-ts-comment */}
+      {/* @ts-expect-error */}
+      <ReactModal
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
       >
         {/* <button onClick={closeModal}>X</button> */}
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-expect-error */}
+        <div>
+          <span>
+            Você escolheu <strong>{selectedPlan.name}</strong> por{" "}
+            <strong>R$ {selectedPlan.value}</strong>.
+          </span>
+          <br />
+          <br />
+          <br />
+          <span>
+            Agora, informe os seus dados. Vamos te ajudar com a contratação.
+          </span>
+          <br />
+          <br />
+          <br />
+        </div>
         <PlanStyle.FormPlans onSubmit={handleSubmit(onSubmit)}>
           <PlanStyle.InputFormPlans
             {...register("name")}
@@ -319,6 +360,11 @@ export default function Plans() {
             error={errors.number?.message}
           />
           <PlanStyle.InputFormPlans
+            {...register("district")}
+            placeholder="Bairro*"
+            error={errors.district?.message}
+          />
+          <PlanStyle.InputFormPlans
             {...register("city")}
             placeholder="Cidade*"
             error={errors.city?.message}
@@ -333,13 +379,14 @@ export default function Plans() {
             placeholder="Ponto de referencia*"
             error={errors.reference?.message}
           />
+          <div />
 
           {/* <input {...register("exampleRequired", { required: true })} />
           {errors.exampleRequired && <span>This field is required</span>} */}
 
           <PlanStyle.ButtonFormPlans type="submit" value="Contratar agora" />
         </PlanStyle.FormPlans>
-      </Modal>
+      </ReactModal>
     </>
   );
 }

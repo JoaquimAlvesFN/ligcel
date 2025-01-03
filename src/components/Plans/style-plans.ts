@@ -19,8 +19,8 @@ const ContainerCard = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  padding: 20px;
-  height: auto;
+  padding: 30px;
+  height: 550px;
   width: 50px;
   border-radius: 10px;
   margin: 20px 0px;
@@ -28,6 +28,10 @@ const ContainerCard = styled.div`
   box-shadow: 2px 0px 7px 3px rgba(0, 0, 0, 0.39);
   -webkit-box-shadow: 2px 0px 7px 3px rgba(0, 0, 0, 0.39);
   -moz-box-shadow: 2px 0px 7px 3px rgba(0, 0, 0, 0.39);
+
+  @media (max-width: 768px) {
+    height: 400px;
+  }
 `;
 
 const ContentCard = styled.div`
@@ -83,7 +87,7 @@ const PrincipalPrice = styled.span`
 
 const FormPlans = styled.form`
   display: grid;
-  grid-template-columns: repeat(2, 50%);
+  grid-template-columns: repeat(2, 20vw);
   grid-gap: 10px;
 
   @media (max-width: 768px) {

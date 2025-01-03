@@ -3,19 +3,30 @@ import { create } from "zustand";
 interface SelectedPlansProps {
   selectedPlan: {
     name: string;
-    value: number;
-    options: string;
+    value: string;
+    options?: string | null;
   };
-  changeSelectPlan: () => void;
+  changeSelectPlan: (newPlan: {
+    name: string;
+    value: string;
+    options: string;
+  }) => void;
 }
 
 const useSelectedPlans = create<SelectedPlansProps>()((set) => ({
   selectedPlan: {
     name: "",
-    value: 0,
+    value: "",
     options: "",
   },
-  changeSelectPlan: () => set(() => ({})),
+  changeSelectPlan: (newPlan: {
+    name: string;
+    value: string;
+    options: string;
+  }) =>
+    set(() => ({
+      selectedPlan: newPlan,
+    })),
 }));
 
 export default useSelectedPlans;
