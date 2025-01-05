@@ -25,12 +25,16 @@ export default function QuemSomos() {
         </WhoStyle.SectionParagraph>
 
         <WhoStyle.SectionParagraph>
-          <WhoStyle.Title>{whodata.valores.titulo}</WhoStyle.Title>
-          <ul>
+          <WhoStyle.Title style={{ textAlign: "center" }}>
+            {whodata.valores.titulo}
+          </WhoStyle.Title>
+          <WhoStyle.SectionValues>
             {whodata.valores.values.map((value, index) => (
-              <li key={index}>{value}</li>
+              <WhoStyle.SectionValuesCard key={index}>
+                {value}
+              </WhoStyle.SectionValuesCard>
             ))}
-          </ul>
+          </WhoStyle.SectionValues>
         </WhoStyle.SectionParagraph>
 
         <WhoStyle.SectionParagraph>
@@ -60,9 +64,15 @@ export default function QuemSomos() {
           <WhoStyle.Title>{whodata.conosco.titulo}</WhoStyle.Title>
           <WhoStyle.Paragraph>{whodata.conosco.descricao}</WhoStyle.Paragraph>
           <ul style={{ marginTop: "1rem" }}>
-            <li>Telefone: {whodata.conosco.contato.telefone}</li>
-            <li>WhatsApp: {whodata.conosco.contato.whatsapp}</li>
-            <li>E-mail: {whodata.conosco.contato.email}</li>
+            <li style={{ marginBottom: 10 }}>
+              Telefone: {whodata.conosco.contato.telefone}
+            </li>
+            <li style={{ marginBottom: 10 }}>
+              WhatsApp: {whodata.conosco.contato.whatsapp}
+            </li>
+            <li style={{ marginBottom: 10 }}>
+              E-mail: {whodata.conosco.contato.email}
+            </li>
           </ul>
         </WhoStyle.SectionParagraph>
         {/*
