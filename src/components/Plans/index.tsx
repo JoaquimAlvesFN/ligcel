@@ -1,3 +1,4 @@
+"use client";
 import PlanStyle from "./style-plans";
 import Slider, { Settings, CustomArrowProps } from "react-slick";
 import ReactModal from "react-modal";
@@ -101,8 +102,8 @@ export default function Plans() {
     {
       betterLabel: "Melhor Oferta",
       title: "Super HD",
-      price: "59,99",
-      promotionPrice: "99,99",
+      price: "99,99",
+      promotionPrice: "59,99",
       afterThreeMonthsPrice: "109,90",
       titleThreeMonths: "Após 3 meses, valor ",
       servicesInclude: [""],
@@ -241,13 +242,21 @@ export default function Plans() {
               <PlanStyle.ContainerCard key={index}>
                 <PlanStyle.ContentCard>
                   <PlanStyle.HeadTitle>{card.title}</PlanStyle.HeadTitle>
-                  <PlanStyle.ContainerPrice>
-                    De <PlanStyle.Price>{card.price}</PlanStyle.Price> por
-                    apenas
-                  </PlanStyle.ContainerPrice>
-                  <PlanStyle.PrincipalPrice>
-                    R$ {card.promotionPrice}/mês
-                  </PlanStyle.PrincipalPrice>
+                  {card.promotionPrice ? (
+                    <>
+                      <PlanStyle.ContainerPrice>
+                        De <PlanStyle.Price>{card.price}</PlanStyle.Price> por
+                        apenas
+                      </PlanStyle.ContainerPrice>
+                      <PlanStyle.PrincipalPrice>
+                        R$ {card.promotionPrice}/mês
+                      </PlanStyle.PrincipalPrice>
+                    </>
+                  ) : (
+                    <PlanStyle.PrincipalPrice>
+                      R$ {card.price}/mês
+                    </PlanStyle.PrincipalPrice>
+                  )}
                   <PlanStyle.SubHeadTitle>
                     {card.titleThreeMonths}
                     {card.afterThreeMonthsPrice}
@@ -257,7 +266,7 @@ export default function Plans() {
                       openModal();
                       changeSelectPlan({
                         name: card.title,
-                        value: card.price,
+                        value: card.promotionPrice || card.price,
                         options: "",
                       });
                     }}
