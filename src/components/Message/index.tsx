@@ -56,11 +56,10 @@ export default function Message() {
         style={{
           border: "1px solid #ccc",
           padding: "1em",
-          width: screenWidth <= 768 ? "auto" : "400px",
+          width: screenWidth <= 768 ? "400px" : "auto",
           height: screenWidth <= 768 ? "400px" : "auto",
           position: "fixed",
           right: 10,
-          // left: screenWidth <= 768 ?? 10,
           bottom: 10,
           backgroundColor: "#fff",
           borderRadius: 10,
@@ -133,6 +132,9 @@ export default function Message() {
           }}
           onClick={() => {
             changeOpenChatbot(false);
+            setMessages((prev) => [
+              { sender: "bot", text: chatbotConfig.welcomeMessage },
+            ]);
           }}
         >
           FECHAR
